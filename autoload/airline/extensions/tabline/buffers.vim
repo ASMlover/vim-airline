@@ -79,7 +79,7 @@ function! airline#extensions#tabline#buffers#get()
       if len(s:number_map) > 0
         call b.add_section(group, s:spc . get(s:number_map, l:index, '') . '%(%{airline#extensions#tabline#get_buffer_name('.nr.')}%)' . s:spc)
       else
-        call b.add_section(group, '['.l:index.s:spc.'%(%{airline#extensions#tabline#get_buffer_name('.nr.')}%)'.']')
+        call b.add_section(group, l:index.s:spc.'%(%{airline#extensions#tabline#get_buffer_name('.nr.')}%)')
       endif
       let l:index = l:index + 1
     else
