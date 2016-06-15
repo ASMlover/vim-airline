@@ -179,7 +179,8 @@ function! airline#extensions#tabline#group_of_bufnr(tab_bufs, bufnr)
     elseif index(a:tab_bufs, a:bufnr) > -1
       let group = 'airline_tab'
     else
-      let group = 'airline_tabhid'
+      " let group = 'airline_tabhid'
+      let group = 'airline_tab'
     endif
   endif
   return group
