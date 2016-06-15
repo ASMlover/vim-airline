@@ -1,6 +1,8 @@
 " MIT License. Copyright (c) 2013-2016 Bailey Ling.
 " vim: et ts=2 sts=2 sw=2
 
+scriptencoding utf-8
+
 let s:show_close_button = get(g:, 'airline#extensions#tabline#show_close_button', 1)
 let s:show_tab_type = get(g:, 'airline#extensions#tabline#show_tab_type', 1)
 let s:show_tab_nr = get(g:, 'airline#extensions#tabline#show_tab_nr', 1)
@@ -13,6 +15,20 @@ let s:spc = g:airline_symbols.space
 let s:current_bufnr = -1
 let s:current_tabnr = -1
 let s:current_modified = 0
+let s:number_map = &encoding == 'utf-8'
+      \ ? {
+      \ '0': '⁰',
+      \ '1': '¹',
+      \ '2': '²',
+      \ '3': '³',
+      \ '4': '⁴',
+      \ '5': '⁵',
+      \ '6': '⁶',
+      \ '7': '⁷',
+      \ '8': '⁸',
+      \ '9': '⁹'
+      \ }
+      \ : {}
 
 function! airline#extensions#tabline#tabs#off()
   augroup airline_tabline_tabs
@@ -62,7 +78,11 @@ function! airline#extensions#tabline#tabs#get()
       if s:tab_nr_type == 0
         let val .= (g:airline_symbols.space).'%{len(tabpagebuflist('.i.'))}'
       elseif s:tab_nr_type == 1
-        let val .= (g:airline_symbols.space).i
+        if len(s:number_map) > 0
+          let val .= (g:airline_symbols.space).get(s:number_map, i, '')
+        else
+          let val .= (g:airline_symbols.space).i
+        endif
       else "== 2
         let val .= (g:airline_symbols.space).i.'.%{len(tabpagebuflist('.i.'))}'
       endif
